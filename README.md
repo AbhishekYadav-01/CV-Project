@@ -1,4 +1,4 @@
-# CV-Project: Realistic Object Placement and Compositing
+# CV-Project: Virtual Object Placement and Interaction in Real-World Images
 
 This project demonstrates a pipeline for placing 3D objects into 2D scenes with realistic lighting, shadows, and geometry adaptation. It combines computer vision and rendering techniques to achieve visually convincing results.
 
