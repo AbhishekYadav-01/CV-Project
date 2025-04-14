@@ -1,114 +1,103 @@
-# CV-Project: Virtual Object Placement and Interaction in Real-World Images
+# 🧠 3D Object Insertion into 2D Scenes: A Multi-Module Augmented Reality Pipeline
 
-This project demonstrates a pipeline for placing 3D objects into 2D scenes with realistic lighting, shadows, and geometry adaptation. It combines computer vision and rendering techniques to achieve visually convincing results.
+This project demonstrates a modular pipeline for inserting 3D objects into 2D scene images with high realism. The system ensures the correct perspective, occlusion, lighting, and interactivity to deliver a complete AR experience — all using a combination of classical computer vision and deep learning.
 
-## Features
+---
 
-- **3D Object Placement**: Place 3D objects into 2D scenes using camera parameters and depth maps.
-- **Scene Geometry Estimation**: Use MiDaS to estimate depth and normal maps for the scene.
-- **Lighting and Shadow Adaptation**: Apply realistic lighting and shadow effects to blend objects seamlessly into the scene.
-- **Camera Pose Estimation**: Compute camera intrinsics and extrinsics for accurate object placement.
+## 📌 Project Overview
 
-## Project Structure
+The pipeline consists of five core modules:
 
+1. **Scene Geometry Estimation** – Extracts depth and surface normals from a 2D image using MiDaS.
+2. **Camera Pose Estimation** – Computes camera orientation and position from vanishing points and optional depth.
+3. **Object Placement and Occlusion Handling** – Places the 3D object in the correct position with occlusion-aware blending.
+4. **Lighting and Shadow Adaptation** – Matches lighting and shadows with the scene using classical and GAN-based methods.
+5. **Deployment and Interactivity** – A Streamlit interface allows users to upload scenes and insert 3D objects interactively.
+
+---
+
+## 📷 Demo Highlights
+
+- 3D Spider-Man placed realistically into real-world scenes.
+- Camera pose visualized with 3D axis projections.
+- Occlusion masks generated from depth data.
+- Shadows adapted using multiple methods including ShadowGAN.
+
+---
+
+## 🛠️ Technologies Used
+
+- **Python**
+- **OpenCV**, **NumPy**
+- **MiDaS (DPT-Large)** for depth estimation
+- **Trimesh**, **Pyrender** for 3D mesh and rendering
+- **Scikit-learn (K-means)** for vanishing point clustering
+- **Streamlit** for UI deployment
+- **ShadowGAN** for advanced shadow rendering
+
+---
+
+## 📂 Directory Structure
+```bash
+├── modules/
+│   ├── depth_estimation.py             # Depth and normal map computation using MiDaS
+│   ├── camera_pose.py                  # Line detection, vanishing points, and pose matrix
+│   ├── object_placement.py             # Object transformation, rendering, and occlusion
+│   ├── lighting_shadow.py              # Lighting correction and shadow generation methods
+│   └── ui_streamlit.py                 # Streamlit-based user interface
+│
+├── models/
+│   └── object.glb                      # 3D object model used in rendering
+│
+├── data/
+│   ├── scene_image.jpeg                # Input 2D scene image
+│   └── depth_map.npy                   # Predicted depth map (optional)
+│
+├── outputs/
+│   ├── final_composite.png            # Final image with the inserted 3D object
+│   ├── pose_matrix.npy                # Estimated 4x4 camera pose matrix
+│   └── debug_visuals/                 # Optional visualizations (axes, masks, etc.)
+│
+├── app.py                              # Main script to run the entire pipeline
+├── README.md                           # Project documentation
+└── requirements.txt                    # Python dependencies
 ```
-CV-Project/
-├── Modules/
-│   ├── download_assets.py          # Downloads required assets (3D object and scene image)
-│   ├── scene_geometry.py           # Estimates scene geometry (depth and normal maps)
-│   ├── camera_pose.py              # Estimates camera pose
-│   ├── object_placement.py         # Places 3D objects into the scene
-│   ├── lighting_adaptation.py      # Adapts lighting and shadows for realism
-│   ├── main.py                     # Main pipeline script
-├── README.md                       # Project documentation
-```
 
-## Setup Instructions
 
-1. **Clone the Repository**:
+---
 
-   ```bash
-   git clone <repository-url>
-   cd CV-Project
-   ```
+## 🧑‍💻 Team Members and Contributions
 
-2. **Install Dependencies**:
-   Ensure you have Python 3.8+ installed. Install the required libraries:
+- **Omprakash Nain (B22AI062)** – Scene Geometry Estimation
+- **Shahil Sharma (B22CS048)** – Camera Pose Estimation via Geometric Reasoning
+- **Abhishek Yadav (B22ES020)** – Object Placement and Occlusion Handling
+- **Sai Vignesh (B22ES023)** – Model Loading, Positioning, ShadowGAN Integration
+- **Shivanshu Verma (B22ES010)** – Lighting, Shadow Adaptation & UI Deployment
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-3. **Download Assets**:
-   The project includes a script to download the necessary assets:
+## 📈 Results
 
-   ```bash
-   python Modules/download_assets.py
-   ```
+- Composite images show realistic placement and lighting of virtual 3D objects.
+- Depth- and normal-based occlusion blending makes object integration seamless.
+- Multiple shadow techniques compared to find the best visual quality.
 
-4. **Run the Pipeline**:
-   Execute the main script to run the full pipeline:
-   ```bash
-   python Modules/main.py
-   ```
+---
 
-## Usage
+## 🔮 Future Work
 
-### Step 1: Download Assets
+- Real-time video integration
+- Improved pose estimation with learning-based vanishing point detection
+- Mobile deployment using lightweight inference
 
-The `download_assets.py` script downloads a sample 3D object (`object.glb`) and a scene image (`scene_image.jpeg`) for testing.
+---
 
-### Step 2: Estimate Scene Geometry
+## 🔗 GitHub Repository
 
-The `scene_geometry.py` module uses MiDaS to estimate depth and normal maps for the input scene image.
+[Click here to view the code on GitHub](https://github.com/AbhishekYadav-01/CV-Project)
 
-### Step 3: Estimate Camera Pose
+---
 
-The `camera_pose.py` module computes the camera's intrinsic and extrinsic parameters.
+## 📅 Date of Submission
 
-### Step 4: Place Object
-
-The `object_placement.py` module places the 3D object into the scene using the estimated geometry and camera parameters.
-
-### Step 5: Apply Lighting and Shadows
-
-The `lighting_adaptation.py` module blends the object into the scene with realistic lighting and shadow effects.
-
-### Step 6: View Results
-
-The final composited image is saved as `final_output.jpg`.
-
-## Example Output
-
-- **Input Scene**: `scene_image.jpeg`
-- **3D Object**: `object.glb`
-- **Final Composite**: `final_output.jpg`
-
-## Dependencies
-
-- Python 3.8+
-- OpenCV
-- PyTorch
-- NumPy
-- PyRender
-- Trimesh
-- Matplotlib
-- gdown
-
-## Acknowledgments
-
-- **MiDaS**: For depth and normal map estimation.
-- **PyRender**: For 3D rendering.
-- **Trimesh**: For 3D object manipulation.
-
-## Contributions
-
-- Om Prakash Nain : Depth and Normal Estimation
-- Shahil Sharma : Pose Estimation
-  = Abhishek Yadav & Vignesh : Object Placement and Occulsion
-- Shivanshu Verm : Lighting and Shadow Adaptation
-- Shivanshu Verma & Vignesh : Project Deployment
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
+**April 14, 2025**
